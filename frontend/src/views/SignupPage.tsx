@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { api } from '../lib/api';
 
 export const SignupPage: React.FC = () => {
@@ -10,6 +10,7 @@ export const SignupPage: React.FC = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -67,14 +68,23 @@ export const SignupPage: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-bold text-clarity-darkBrown mb-1 ml-1 select-none">Mot de passe</label>
-            <input 
-              type="password" 
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-5 py-4 rounded-2xl border border-gray-100 focus:outline-none focus:ring-4 focus:ring-clarity-beige/50 bg-gray-50 transition-all font-medium"
-              placeholder="Min. 6 caractères"
-            />
+            <div className="relative">
+              <input 
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-5 py-4 pr-12 rounded-2xl border border-gray-100 focus:outline-none focus:ring-4 focus:ring-clarity-beige/50 bg-gray-50 transition-all font-medium"
+                placeholder="Min. 6 caractères"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-clarity-muted hover:text-clarity-brown transition-colors"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
           
           <button 
