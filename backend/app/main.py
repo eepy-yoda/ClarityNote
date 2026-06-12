@@ -30,6 +30,10 @@ app.include_router(api_router, prefix="/api/v1")
 os.makedirs("static/pdfs", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+@app.get("/")
+def root():
+    return {"message": "ClarityNote API is running 🚀"}
+
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
