@@ -27,8 +27,11 @@ app.add_middleware(
 
 app.include_router(api_router, prefix="/api/v1")
 
-os.makedirs("static/pdfs", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Mount static files only if directory exists (not available on Vercel serverless)
+static_dir = "static"
+if os.path.isdir(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 
 @app.get("/")
 def root():
