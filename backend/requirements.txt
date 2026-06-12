@@ -6,9 +6,5 @@ supabase
 python-dotenv
 python-jose
 python-multipart
-easyocr
 reportlab
 requests
-torch
-torchvision
-torchaudio
