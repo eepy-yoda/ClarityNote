@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-clarity-paper text-clarity-darkBrown font-sans antialiased;
+}
+
+/* Custom soft shadow */
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(139, 69, 19, 0.08);
+}

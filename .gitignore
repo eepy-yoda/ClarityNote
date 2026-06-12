@@ -1,0 +1,33 @@
+# Node dependencies
+node_modules/
+dist/
+build/
+.npm
+.eslintcache
+
+# Python virtual environments and caches
+venv/
+venv_new/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+ENV/
+*.log
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
+.gemini/

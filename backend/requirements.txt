@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+supabase
+python-dotenv
+python-jose
+python-multipart
+easyocr
+reportlab
+requests
+torch
+torchvision
+torchaudio
