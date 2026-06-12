@@ -42,7 +42,14 @@ export function useAuth() {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      // When user clicks the password reset link in email,
+      // Supabase fires PASSWORD_RECOVERY — redirect them to the reset page
+      if (event === 'PASSWORD_RECOVERY') {
+        window.location.href = '/reset-password';
+        return;
+      }
+
       if (session?.user) {
         setUser({ id: session.user.id, email: session.user.email || '' });
         syncUserToLocalStorage(session.user.email || '');

@@ -14,17 +14,24 @@ export const ResetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Supabase puts the token in the URL hash — it auto-handles the session
-    supabase.auth.onAuthStateChange((event, session) => {
+    // Listen for the PASSWORD_RECOVERY event fired by Supabase
+    // when the user arrives via the reset link in their email
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY' && session) {
         setValidSession(true);
       }
     });
 
-    // Check if already in a recovery session
+    // Also handle case where page loads with recovery token already in URL hash
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setValidSession(true);
+      // Only trust session if we're on this page intentionally (token in URL)
+      const hash = window.location.hash;
+      if (session && (hash.includes('type=recovery') || hash.includes('access_token'))) {
+        setValidSession(true);
+      }
     });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleReset = async (e: React.FormEvent) => {
