@@ -14,12 +14,13 @@ class SignInRequest(BaseModel):
 
 @router.post("/signup")
 async def signup(request: SignUpRequest):
-    """Create a new user account"""
+    """Create a new user account with auto-confirm"""
     try:
         supabase = get_supabase()
-        response = supabase.auth.sign_up({
+        response = supabase.auth.admin.create_user({
             "email": request.email,
             "password": request.password,
+            "email_confirm": True
         })
         return {
             "success": True,

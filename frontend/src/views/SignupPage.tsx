@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { api } from '../lib/api';
 
 export const SignupPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,19 +18,25 @@ export const SignupPage: React.FC = () => {
     setError('');
     setSuccessMessage('');
 
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      // Create user via backend which auto-confirms email
+      await api.post('/auth/signup', { email, password });
 
-    if (signUpError) {
-      setError(signUpError.message);
+      // Automatically sign in user client-side
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        setError(signInError.message);
+        setLoading(false);
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || "L'inscription a échoué. Veuillez réessayer.");
       setLoading(false);
-    } else if (data?.session === null) {
-      setSuccessMessage('Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.');
-      setLoading(false);
-    } else {
-      navigate('/dashboard');
     }
   };
 
