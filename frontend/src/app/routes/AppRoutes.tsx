@@ -12,6 +12,7 @@ import { PdfsPage } from '../../views/PdfsPage';
 import { ProfilePage } from '../../views/ProfilePage';
 import { NotesProvider } from '../../context/NotesContext';
 import { AdminPanel } from '../../views/AdminPanel';
+import { ResetPasswordPage } from '../../views/ResetPasswordPage';
 
 export const AppRoutes: React.FC = () => {
   const { user, loading } = useAuth();
@@ -51,6 +52,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/pdfs" element={<ProtectedRoute component={PdfsPage} />} />
       <Route path="/profile" element={<ProtectedRoute component={ProfilePage} />} />
       <Route path="/admin" element={user && user.email.toLowerCase() === 'tsmeowtsmeow@gmail.com' ? <ProtectedRoute component={AdminPanel} /> : <Navigate to="/dashboard" />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
     </Routes>
   );
 };
