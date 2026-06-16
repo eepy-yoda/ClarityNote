@@ -19,11 +19,10 @@ export const SignupPage: React.FC = () => {
     setError('');
     setSuccessMessage('');
 
-    try {
-      // Create user via backend which auto-confirms email
-      await api.post('/auth/signup', { email, password });
+    const redirectTo = window.location.origin;
 
-      // Automatically sign in user client-side
+    try {
+      await api.post('/auth/signup', { email, password });
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -36,7 +35,31 @@ export const SignupPage: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.response?.data?.detail || "L'inscription a échoué. Veuillez réessayer.");
+      const backendError = err.response?.data?.detail || err.message;
+      // If backend is unavailable in production, fallback to direct Supabase signup
+      try {
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: redirectTo },
+        });
+
+        if (signUpError) {
+          setError(signUpError.message || backendError || "L'inscription a échoué. Veuillez réessayer.");
+          setLoading(false);
+          return;
+        }
+
+        if (data?.session) {
+          navigate('/dashboard');
+          return;
+        }
+
+        setSuccessMessage('Inscription réussie ! Veuillez vérifier votre email et confirmer votre compte.');
+      } catch (fallbackErr: any) {
+        setError(fallbackErr.message || backendError || "L'inscription a échoué. Veuillez réessayer.");
+      }
+
       setLoading(false);
     }
   };

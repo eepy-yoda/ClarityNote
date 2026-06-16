@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { supabase } from './supabase';
 
+const defaultApiUrl = typeof window !== 'undefined'
+  ? `${window.location.origin}/api/v1`
+  : 'http://localhost:8000/api/v1';
+
 export const api = axios.create({
-  // In production (same Vercel domain), use relative path.
-  // In dev, VITE_API_URL should already include the /api/v1 prefix.
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1',
+  baseURL: import.meta.env.VITE_API_URL || defaultApiUrl,
 });
 
 // REQUEST interceptor — attach token, refresh only when actually expired
