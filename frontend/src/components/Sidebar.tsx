@@ -20,7 +20,7 @@ export const Sidebar: React.FC = () => {
     { name: 'Télécharger une Note', path: '/upload', icon: UploadCloud },
     { name: 'PDF Générés', path: '/pdfs', icon: FileCheck },
     { name: 'Événements', path: '/events', icon: Calendar },
-    ...(user?.email?.toLowerCase() === 'tsmeowtsmeow@gmail.com'
+    ...(user?.email?.toLowerCase() && ['tsmeowtsmeow@gmail.com', 'nourromdhane21@gmail.com'].includes(user.email.toLowerCase())
       ? [{ name: 'Admin Panel', path: '/admin', icon: Shield }]
       : []),
     { name: 'Profil', path: '/profile', icon: User },

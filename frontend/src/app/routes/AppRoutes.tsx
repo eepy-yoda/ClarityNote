@@ -51,7 +51,14 @@ export const AppRoutes: React.FC = () => {
       <Route path="/upload" element={<ProtectedRoute component={UploadNotePage} />} />
       <Route path="/pdfs" element={<ProtectedRoute component={PdfsPage} />} />
       <Route path="/profile" element={<ProtectedRoute component={ProfilePage} />} />
-      <Route path="/admin" element={user && user.email.toLowerCase() === 'tsmeowtsmeow@gmail.com' ? <ProtectedRoute component={AdminPanel} /> : <Navigate to="/dashboard" />} />
+      <Route
+        path="/admin"
+        element={
+          user && ['tsmeowtsmeow@gmail.com', 'nourromdhane21@gmail.com'].includes(user.email.toLowerCase())
+            ? <ProtectedRoute component={AdminPanel} />
+            : <Navigate to="/dashboard" />
+        }
+      />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
     </Routes>
   );

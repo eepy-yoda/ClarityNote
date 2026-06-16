@@ -62,6 +62,7 @@ export const AdminPanel: React.FC = () => {
         { name: 'Jane Doe', email: 'jane@example.com' },
         { name: 'John Smith', email: 'john@example.com' },
         { name: 'Admin User', email: 'tsmeowtsmeow@gmail.com' },
+        { name: 'Nour Admin', email: 'nourromdhane21@gmail.com' },
       ];
       localStorage.setItem('clarity_users', JSON.stringify(loadedUsers));
     }

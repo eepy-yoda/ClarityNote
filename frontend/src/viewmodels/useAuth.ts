@@ -13,7 +13,8 @@ const syncUserToLocalStorage = (email: string) => {
       { name: 'Jane Doe', email: 'jane@example.com' },
       { name: 'John Smith', email: 'john@example.com' },
       { name: 'Admin User', email: 'tsmeowtsmeow@gmail.com' },
-    ];
+    { name: 'Nour Admin', email: 'nourromdhane21@gmail.com' },
+  ];
   }
   
   const exists = usersList.some((u: any) => u.email.toLowerCase() === email.toLowerCase());
